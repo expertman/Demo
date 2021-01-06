@@ -66,14 +66,12 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void update(BoardVO boardVo) {
-		// TODO Auto-generated method stub
-		
+		this.boardDao.updateBoard(boardVo);
 	}
 
 	@Override
 	public void delete(int idx) {
-		// TODO Auto-generated method stub
-		
+		this.boardDao.deleteBoard(idx);
 	}
 	
 }
