@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Welcome to example.com</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h1 class="text-center">자료실형 게시판</h1>
+		
+		<table class="table">
+			<tr>
+				<td class="text-left">[<a th:href="@{write}">글쓰기</a>]</td>
+				<td class="text-right">(<span th:text="${boardlist.size()}"></span>)</td>
+			</tr>
+		</table>
+		<table class="table table-bordered">
+  			<thead>
+  				<tr class="success">
+  					<th class="text-center" style="width:10%">글번호</th>
+  					<th class="text-center" style="width:15%">작성자</th>
+  					<th class="text-center" style="width:40%">제목</th>
+  					<th class="text-center" style="width:10%">파일</th>
+  					<th class="text-center" style="width:15%">작성날짜</th>
+  					<th class="text-center" style="width:10%">조회수</th>
+  				</tr>
+  			</thead>
+  			<tbody th:if="${boardlist.size() eq 0}">
+  				<tr>
+					<td colspan="6" class="text-center danger">No Data</td>
+				</tr>
+  			</tbody>
+			<tbody th:if="${boardlist.size() gt 0}">	
+  				<tr th:each="board : ${boardlist}">
+					<td class="text-center" th:text="${board.idx}"></td>
+					<td class="text-center" th:if="${board.email ne null}">
+						<a th:href="'mailto:' + ${board.email}" th:text="${board.name}"></a>
+					</td>
+					<td class="text-center" th:if="${board.email eq null}" th:text="${board.name}"></td>
+					<td class="text-center">
+						<a th:href="@{view/{idx}(idx=${board.idx})}" th:text="${board.title}"></a>
+					</td>
+					<td class="text-center" th:if="${board.filename ne null}">
+						<img th:src="'images/' + ${board.filename} + '.png'" style="width:25px;height:25px"/>
+					</td>
+					<td  class="text-center" th:if="${board.filename eq null}">&nbsp;</td>
+					<td class="text-center" th:text="${#dates.format(board.writedate, 'yyyy-MM-dd')}"></td>
+					<td class="text-center" th:text="${board.readcount}"></td>
+				</tr>
+  			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Welcome to example.com</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="jumbotron">
+				<h1>Welcome to www.example.com</h1>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo accusantium,
+						aspernatur quos porro commodi perspiciatis, assumenda consequuntur eius inventore
+						eaque omnis, magni natus corrupti doloremque? Quia aliquid excepturi tempora
+						praesentium modi necessitatibus sequi quisquam dolorem nihil deserunt magnam,
+						distinctio sunt aspernatur nisi. Id odio quaerat amet quidem adipisci totam ad.</p>
+				<p>
+					<a class="btn btn-success btn-lg" th:href="@{list}" role="button">자료실 게시판</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+
+	<select id="currentDate" resultType="java.util.Date">
+		SELECT SYSDATE FROM dual
+	</select>
+
+	<resultMap type="boardVo" id="selectMap">
+		<id column="idx" jdbcType="INTEGER" property="idx"
+			javaType="Integer" />
+		<result column="name" jdbcType="VARCHAR" property="name"
+			javaType="String" />
+		<result column="email" jdbcType="VARCHAR" property="email"
+			javaType="String" />	
+		<result column="title" jdbcType="VARCHAR" property="title"
+			javaType="String" />
+		<result column="contents" jdbcType="VARCHAR" property="contents"
+			javaType="String" />
+		<result column="writedate" jdbcType="DATE"
+			property="writedate" javaType="java.util.Date" />
+		<result column="readcount" jdbcType="INTEGER" property="readcount"
+			javaType="Integer" />
+		<result column="filename" jdbcType="VARCHAR" property="filename"
+			javaType="String" />
+	</resultMap>
+
+	<parameterMap type="hashMap" id="selectAllParameterMap">
+		<parameter property="results" javaType="ResultSet"
+			jdbcType="CURSOR" mode="OUT" resultMap="selectMap" />
+	</parameterMap>
+	
+	<select id="selectAllSP" parameterMap="selectAllParameterMap" statementType="CALLABLE">
+		{ call sp_board_select_all(?) }
+	</select>
+
+	<parameterMap type="hashMap" id="selectOneParameterMap">
+		<parameter property="idx" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" 
+		mode="OUT" resultMap="selectMap"/>
+	</parameterMap>
+	<select id="selectOneSP" parameterMap="selectOneParameterMap" statementType="CALLABLE">
+		{ call sp_board_select_one(?, ?) }	
+	</select>
+
+	<parameterMap type="boardVo" id="insertParameterMap">
+		<parameter property="name" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contents" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="filename" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+	<insert id="insertSP" statementType="CALLABLE" parameterMap="insertParameterMap">
+		{ call sp_board_insert(?, ?, ?, ?, ?) }
+	</insert>
+
+</mapper>
